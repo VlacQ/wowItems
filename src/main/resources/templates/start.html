@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="../static/css/demo.css" th:ref="@{/css/demo.css}"/>
+    <title>Thymelead Demo</title>
+</head>
+<body>
+    <h3>List of Items</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item : ${itemList}">
+                <td th:text="${item.id}"/>
+                <td th:text="${item.name}"/>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
