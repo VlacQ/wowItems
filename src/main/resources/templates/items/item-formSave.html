@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/demo.css}"/>
+    <title>WoW Items API - Add item</title>
+</head>
+<body>
+<form action="#" th:action="@{/items/save}" th:object="${item}" method="post">
+    <input type="hidden" th:field="*{id}" class="form-control mb-4 col-4"/>
+    <p>Name of the Item: <input type="text" th:field="*{name}" placeholder="Super Rod of Destruction"
+                                class="form-control mb-4 col-4"/></p>
+    <p><input type="submit" value="Submit" class="btn btn-info col-2"/></p>
+</form>
+<a th:href="@{/items/list}">Back to Items list</a>
+</body>
+</html>
