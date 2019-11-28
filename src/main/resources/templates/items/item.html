@@ -1,11 +1,15 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="../../static/css/demo.css" th:ref="@{/css/demo.css}"/>
-    <title>Thymelead Demo</title>
+    <link rel="stylesheet" href="@{/css/demo.css}"/>
+    <title th:text="'Wow Items - ' + ${item.name}"/>
 </head>
 <body>
-    <h3 th:text="${item.id} + ' - ' + ${item.name}"/>
+    <h3 th:text="${item.name}"/>
+    <a th:href="@{/prices/add}"
+       class="btn btn-primary btn-sm mb-3">
+        Add Entry
+    </a>
     <table border="1">
         <thead>
             <tr>
@@ -15,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="price : ${priceList}">
+            <tr th:each="price : ${item.priceList}">
                 <td th:text="${price.amount}"/>
                 <td th:text="${price.price}"/>
                 <td th:text="${price.date}"/>

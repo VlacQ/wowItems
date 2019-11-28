@@ -25,20 +25,9 @@ public class ItemController {
         return "items/list";
     }
 
-    @GetMapping("/add-item")
-    public String create(Model model){
-        model.addAttribute("item", new Item());
-        return "item-form";
-    }
-
-    @PostMapping("/item")
-    public String save(@ModelAttribute Item item, Model model){
-        System.out.println(item.getName());
-        System.out.println(item.getId());
-        itemService.save(item);
-        item = itemService.findByName(item.getName());
-        System.out.println(item.getName());
-        System.out.println(item.getId());
+    @GetMapping("/item")
+    public String save(@RequestParam("itemId") int id, Model model){
+        Item item = itemService.findById(id);
         model.addAttribute("item", item);
         return "items/item";
     }

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" th:href="@{/css/demo.css}"/>
-    <title>WoW Items API - Add item</title>
+    <title th:text="Wow Items - Add Item"/>
 </head>
 <body>
 <form action="#" th:action="@{/items/save}" th:object="${item}" method="post">

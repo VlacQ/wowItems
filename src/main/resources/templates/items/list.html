@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" href="../../static/css/demo.css" th:ref="@{/css/demo.css}"/>
-    <title>Thymelead Demo</title>
+    <title th:text="'Wow Items - List of Items'"/>
 </head>
 <body>
     <h3>List of Items</h3>
@@ -19,8 +19,9 @@
         </thead>
         <tbody>
             <tr th:each="item : ${itemList}">
-                <!--<td th:text="${item.id}"/>-->
-                <td th:text="${item.name}"/>
+                <td>
+                    <a th:href="@{/items/item(itemId=${item.id})}" th:text="${item.name}"/>
+                </td>
                 <td>
                     <a th:href="@{/items/update(itemId=${item.id})}" class="btn btn-info btn-sm">
                         Update
