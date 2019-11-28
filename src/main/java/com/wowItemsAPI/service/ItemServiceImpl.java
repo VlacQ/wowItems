@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +22,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> findAll() {
-        List<Item> itemList = itemRepository.findAll();
+        List<Item> itemList = itemRepository.findAllByOrderByNameAsc();
         if (itemList.isEmpty()){
             itemList = new ArrayList<>();
             Item item = new Item();
@@ -36,31 +35,43 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Item findById(int id) {
-        return itemRepository.findById(id);
+        Optional<Item> result = itemRepository.findById(id);
+
+        Item item = null;
+
+        if (result.isPresent()) {
+            item = result.get();
+        }
+        else {
+            throw new RuntimeException("Did not find employee id - " + id);
+        }
+
+        return item;
     }
 
     @Override
     public Item findByName(String name) {
-        return itemRepository.findByName(name);
+        return new Item();
+//        return itemRepository.findByName(name);
     }
 
     @Override
-    public void save(String name) {
-        itemRepository.save(name);
+    public void save(Item item) {
+        itemRepository.save(item);
     }
 
-    @Override
-    public void update(String name) {
-        itemRepository.update(name);
-    }
+//    @Override
+//    public void update(Item item) {
+//        itemRepository.update(item);
+//    }
 
     @Override
     public void deleteById(int id) {
         itemRepository.deleteById(id);
     }
 
-    @Override
-    public void deleteByName(String name) {
-        itemRepository.deleteByName(name);
-    }
+//    @Override
+//    public void deleteByName(String name) {
+//        itemRepository.deleteByName(name);
+//    }
 }

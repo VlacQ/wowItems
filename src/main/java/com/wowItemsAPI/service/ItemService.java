@@ -11,11 +11,11 @@ public interface ItemService {
 
     public Item findByName(String name);
 
-    public void save(String name);
+    public void save(Item item);
 
-    public void update(String name);
+//    public void update(Item item);
 
     public void deleteById(int id);
 
-    public void deleteByName(String name);
+//    public void deleteByName(String name);
 }

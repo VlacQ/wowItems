@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="../../static/css/demo.css" th:ref="@{/css/demo.css}"/>
+    <title>Thymelead Demo</title>
+</head>
+<body>
+    <h3 th:text="${item.id} + ' - ' + ${item.name}"/>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Amount</th>
+                <th>Price</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="price : ${priceList}">
+                <td th:text="${price.amount}"/>
+                <td th:text="${price.price}"/>
+                <td th:text="${price.date}"/>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
