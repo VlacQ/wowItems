@@ -6,16 +6,30 @@
 </head>
 <body>
 <h3 th:text="'Add Entry'"/>
-<form action="#" th:action="@{/prices/save}" th:object="${price}" method="post">
+<form action="#" th:action="@{/prices/save(itemId=${item.id})}" th:object="${price}" method="post">
     <input type="hidden" th:field="*{id}" class="form-control mb-4 col-4"/>
-    <p>Amount: <input type="number" th:field="*{amount}" placeholder="5"
-                                class="form-control mb-4 col-4"/></p>
-    <p>Price: <input type="number" th:field="*{cost}" placeholder="1.25" step="any"
-                                class="form-control mb-4 col-4"/ value="floating-point number"></p>
-    <p>Date: <input type="date" th:field="*{date}" placeholder="format: yyyy-MM-dd, can be empty"
-                                class="form-control mb-4 col-4"/></p>
-    <p><input type="submit" value="Submit" class="btn btn-info col-2"/></p>
+    <table>
+        <tr>
+            <td>Quantity:</td>
+            <td><input type="number" th:field="*{quantity}" placeholder="5" class="form-control mb-4 col-4"/></td>
+            <td th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}">Quantity Error</td>
+        </tr>
+        <tr>
+            <td>Amount:</td>
+            <td><input type="number" th:field="*{amount}" placeholder="1.25" step="any"
+                       class="form-control mb-4 col-4"></td>
+            <td th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Amount Error</td>
+        </tr>
+        <tr>
+            <td>Date:</td>
+            <td><input type="date" th:field="*{date}" class="form-control mb-4 col-4"/></td>
+            <td th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Date Error</td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit" class="btn btn-info col-2"/></td>
+        </tr>
+    </table>
 </form>
-<!--<a th:href="@{/items/item(itemId=${item.id})}" th:text="'Back to ' + ${item.name}"/>-->
+<a th:href="@{/items/item(itemId=${item.id})}" th:text="'Back to ' + ${item.name}"/>
 </body>
 </html>

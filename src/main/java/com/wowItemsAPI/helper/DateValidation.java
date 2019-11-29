@@ -1,6 +1,8 @@
 package com.wowItemsAPI.helper;
 
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -8,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @NoArgsConstructor
+@Configuration
 public class DateValidation {
     DateFormat sdf = new SimpleDateFormat("yyyy=MM-dd");
 

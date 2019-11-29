@@ -1,17 +1,13 @@
 package com.wowItemsAPI.service;
 
-import com.wowItemsAPI.entity.Item;
 import com.wowItemsAPI.entity.Price;
 import com.wowItemsAPI.helper.DateValidation;
-import com.wowItemsAPI.repository.ItemRepository;
 import com.wowItemsAPI.repository.PriceRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,8 +19,13 @@ public class PriceServiceImpl implements PriceService {
 
     private PriceRepository priceRepository;
 
+    private DateValidation dateValidation;
+
     @Autowired
-    public PriceServiceImpl(PriceRepository priceRepository){this.priceRepository = priceRepository;}
+    public PriceServiceImpl(PriceRepository priceRepository, DateValidation dateValidation){
+        this.priceRepository = priceRepository;
+        this.dateValidation = dateValidation;
+    }
 
 
     @Override
@@ -33,17 +34,17 @@ public class PriceServiceImpl implements PriceService {
         if (priceList.isEmpty()){
             priceList = new ArrayList<>();
             Price price = new Price();
-            price.setId(0);
-            price.setAmount(0);
+            price.setId(0L);
+            price.setQuantity(0);
             price.setDate(new Date());
-            price.setPrice(BigDecimal.ZERO);
+            price.setAmount(BigDecimal.ZERO);
             priceList.add(price);
         }
         return priceList;
     }
 
     @Override
-    public Price findById(int id) {
+    public Price findById(Long id) {
         Optional<Price> result = priceRepository.findById(id);
 
         Price price = null;
@@ -60,18 +61,34 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public boolean save(Price price) {
-        DateValidation dateValidation = new DateValidation();
         if (price.getDate() == null) {
             price.setDate(dateValidation.stringToDate());
         } else if (dateValidation.isValid(price.getDate())){
             return false;
         }
+
+        BigDecimal temp = price.getAmount();
+        temp = temp.setScale(4, BigDecimal.ROUND_UNNECESSARY).divide(new BigDecimal(price.getQuantity()), BigDecimal.ROUND_UNNECESSARY);
+
+        price.setAmount(temp);
+
         priceRepository.save(price);
+
+//        try {
+//            BigDecimal temp = price.getAmount();
+//            temp = temp.setScale(4, BigDecimal.ROUND_UNNECESSARY).divide(new BigDecimal(price.getQuantity()), BigDecimal.ROUND_UNNECESSARY);
+//
+//            price.setAmount(temp);
+//
+//            priceRepository.save(price);
+//        } catch (NullPointerException e){
+//            return false;
+//        }
         return true;
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(Long id) {
         priceRepository.deleteById(id);
     }
 }

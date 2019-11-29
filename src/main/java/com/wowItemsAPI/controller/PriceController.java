@@ -7,8 +7,10 @@ import com.wowItemsAPI.service.PriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -32,30 +34,38 @@ public class PriceController {
     }
 
     @GetMapping("/add")
-    public String addPriceForm(Model model){
+    public String addPriceForm(Model model, @RequestParam("itemId") @Valid int itemId){
         model.addAttribute("price", new Price());
+        model.addAttribute("item", itemService.findById(itemId));
         return "prices/price-formSave";
     }
 
     @GetMapping("/update")
-    public String updatePrice(@RequestParam("priceId") int id, Model model){
+    public String updatePrice(@RequestParam("priceId") @Valid Long id, Model model){
         Price price = priceService.findById(id);
         model.addAttribute("price", price);
         return "prices/price-formSave";
     }
 
     @GetMapping("/delete")
-    public String deletePrice(@RequestParam("priceId") int priceId, @RequestParam("itemId") int itemId){
+    public String deletePrice(@RequestParam("priceId") @Valid Long priceId, @RequestParam("itemId") @Valid int itemId){
+        Item item = itemService.findById(itemId);
+        Price price = priceService.findById(priceId);
+        item.removePrice(price);
         priceService.deleteById(priceId);
         return "redirect:/items/item?itemId=" + itemId;
     }
 
     @PostMapping("/save")
-    public String savePrice(@ModelAttribute("price") Price price, @RequestParam("itemId") int itemId){
-        if (priceService.save(price)){
-            return "redirect:/items/item?itemId=" + itemId;
-        } else {
+    public String savePrice(@ModelAttribute("price") @Valid Price price, @RequestParam("itemId") @Valid int itemId, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
             return "prices/price-formSave";
         }
+        priceService.save(price);
+        Item item = itemService.findById(itemId);
+        item.addPrice(price);
+        itemService.save(item);
+        return "redirect:/items/item?itemId=" + itemId;
+
     }
 }
