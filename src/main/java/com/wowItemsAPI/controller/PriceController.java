@@ -58,9 +58,14 @@ public class PriceController {
 
     @PostMapping("/save")
     public String savePrice(@ModelAttribute("price") @Valid Price price, @RequestParam("itemId") @Valid int itemId, BindingResult bindingResult){
+        System.out.println("test1");
         if (bindingResult.hasErrors()) {
             return "prices/price-formSave";
         }
+        if (bindingResult.hasErrors()) {
+            return "prices/price-formSave";
+        }
+        System.out.println("test2");
         priceService.save(price);
         Item item = itemService.findById(itemId);
         item.addPrice(price);
