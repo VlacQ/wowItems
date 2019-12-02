@@ -6,8 +6,9 @@
 </head>
 <body>
 <h3 th:text="'Add Entry'"/>
-<form action="#" th:action="@{/prices/save(itemId=${item.id})}" th:object="${price}" method="post">
-    <input type="hidden" th:field="*{id}" class="form-control mb-4 col-4"/>
+<form action="#" th:action="@{/prices/save}" method="post" th:object="${priceItem}">
+    <input type="hidden" th:value="${id}" class="form-control mb-4 col-4"/>
+    <input type="hidden" th:field="*{item}" th:value="${item.id}" class="form-control mb-4 col-4"/>
     <table>
         <tr>
             <td>Quantity:</td>
@@ -16,8 +17,7 @@
         </tr>
         <tr>
             <td>Amount:</td>
-            <td><input type="number" th:field="*{amount}" placeholder="1.25" step="any"
-                       class="form-control mb-4 col-4"></td>
+            <td><input type="number" th:field="*{amount}" placeholder="1.25" class="form-control mb-4 col-4" step="any"></td>
             <td th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Amount Error</td>
         </tr>
         <tr>

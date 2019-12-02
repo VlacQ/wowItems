@@ -20,14 +20,14 @@ public class Price {
     private Long id;
 
     @NotNull
-    @Min(value = 1, message = "Quantity cannot be below 0")
+    @Min(value = 1)
     @Column(name = "quantity")
     private Integer quantity;
 
     @NotNull
     @NumberFormat(pattern = "0.0000")
     @DecimalMin(value = "0.0", inclusive = false, message = "Amount have to be above 0")
-    @Column(name = "amount", precision = 5, scale = 4, columnDefinition = "Decimal(7,2)")
+    @Column(name = "amount", precision = 5, scale = 4, columnDefinition = "Decimal(7,4)")
     private BigDecimal amount;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

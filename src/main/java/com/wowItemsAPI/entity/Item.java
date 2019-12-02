@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -53,11 +52,16 @@ public class Item {
 
     private void countMedian(){
         BigDecimal array[] = sortArray();
-
         int mid = array.length / 2;
 
-        if (array.length % 2 == 0){
-            this.setMedian(array[mid].add(array[mid-1]).divide(new BigDecimal("2"), BigDecimal.ROUND_HALF_EVEN));
+        if (array.length != 0){
+            if (array.length % 2 == 0){
+                this.setMedian(array[mid].add(array[mid-1]).divide(new BigDecimal("2"), BigDecimal.ROUND_HALF_EVEN));
+            } else {
+                this.setMedian(array[mid]);
+            }
+        } else {
+            this.setMedian(BigDecimal.ZERO);
         }
     }
 
@@ -70,7 +74,11 @@ public class Item {
             sum = sum.add(element);
         }
 
-        this.setAverage(sum.divide(new BigDecimal(array.length), BigDecimal.ROUND_HALF_EVEN));
+        if (array.length != 0){
+            this.setAverage(sum.divide(new BigDecimal(array.length), BigDecimal.ROUND_HALF_EVEN));
+        } else {
+            this.setAverage(BigDecimal.ZERO);
+        }
     }
 
     private BigDecimal[] sortArray(){

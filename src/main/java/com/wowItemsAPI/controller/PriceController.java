@@ -2,6 +2,7 @@ package com.wowItemsAPI.controller;
 
 import com.wowItemsAPI.entity.Item;
 import com.wowItemsAPI.entity.Price;
+import com.wowItemsAPI.entity.PriceItem;
 import com.wowItemsAPI.service.ItemService;
 import com.wowItemsAPI.service.PriceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,9 @@ public class PriceController {
 
     @GetMapping("/add")
     public String addPriceForm(Model model, @RequestParam("itemId") @Valid int itemId){
-        model.addAttribute("price", new Price());
+        PriceItem priceItem = new PriceItem();
+        priceItem.setItem(itemId);
+        model.addAttribute("priceItem", priceItem);
         model.addAttribute("item", itemService.findById(itemId));
         return "prices/price-formSave";
     }
@@ -57,20 +60,20 @@ public class PriceController {
     }
 
     @PostMapping("/save")
-    public String savePrice(@ModelAttribute("price") @Valid Price price, @RequestParam("itemId") @Valid int itemId, BindingResult bindingResult){
-        System.out.println("test1");
+    public String savePrice(@ModelAttribute("priceItem") @Valid PriceItem priceItem, BindingResult bindingResult, Model model){
+        Item item = itemService.findById(priceItem.getItem());
         if (bindingResult.hasErrors()) {
+            model.addAttribute("item", item);
             return "prices/price-formSave";
         }
-        if (bindingResult.hasErrors()) {
-            return "prices/price-formSave";
-        }
-        System.out.println("test2");
+        Price price = new Price();
+        price.setDate(priceItem.getDate());
+        price.setAmount(priceItem.getAmount());
+        price.setQuantity(priceItem.getQuantity());
         priceService.save(price);
-        Item item = itemService.findById(itemId);
         item.addPrice(price);
         itemService.save(item);
-        return "redirect:/items/item?itemId=" + itemId;
+        return "redirect:/items/item?itemId=" + item.getId();
 
     }
 }
