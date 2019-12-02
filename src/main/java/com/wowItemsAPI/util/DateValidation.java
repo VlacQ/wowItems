@@ -1,7 +1,6 @@
-package com.wowItemsAPI.helper;
+package com.wowItemsAPI.util;
 
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.text.DateFormat;

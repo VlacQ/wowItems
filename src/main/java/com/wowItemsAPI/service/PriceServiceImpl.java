@@ -1,7 +1,7 @@
 package com.wowItemsAPI.service;
 
 import com.wowItemsAPI.entity.Price;
-import com.wowItemsAPI.helper.DateValidation;
+import com.wowItemsAPI.util.DateValidation;
 import com.wowItemsAPI.repository.PriceRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
