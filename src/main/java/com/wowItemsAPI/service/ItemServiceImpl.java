@@ -43,8 +43,8 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Item findByName(String name) {
-        return new Item();
-//        return itemRepository.findByName(name);
+//        return new Item();
+        return itemRepository.findItemByName(name);
     }
 
     @Override
