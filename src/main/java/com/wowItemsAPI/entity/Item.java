@@ -56,6 +56,12 @@ public class Item {
         countStandardDeviation();
     }
 
+    public void countValues(){
+        countMedian();
+        countAverage();
+        countStandardDeviation();
+    }
+
 
     private void countMedian(){
         BigDecimal array[] = sortArray();
@@ -116,7 +122,7 @@ public class Item {
         return array;
     }
 
-    public static BigDecimal BigDecimalSqrt(BigDecimal A, final int SCALE) {
+    private static BigDecimal BigDecimalSqrt(BigDecimal A, final int SCALE) {
         BigDecimal x0 = new BigDecimal("0");
         BigDecimal x1 = new BigDecimal(Math.sqrt(A.doubleValue()));
         while (!x0.equals(x1)) {
