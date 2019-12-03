@@ -8,11 +8,25 @@
 </head>
 <body>
 <h3>List of Items</h3>
-<a th:href="@{/items/add}"
-   class="btn btn-primary btn-sm mb-3">
-    Add Item
-</a>
-<input type="text" id="search" placeholder="Search..." onkeyup="myFunction()">
+<table>
+    <tr>
+        <th>
+            <a th:href="@{/items/add}"
+               class="btn btn-primary btn-sm mb-3">
+                Add Item
+            </a>
+            <a th:href="@{/items/read}"
+               class="btn btn-primary btn-sm mb-3">
+                Read from file
+            </a>
+        </th>
+    </tr>
+    <tr>
+        <th>
+            <input type="text" id="search" placeholder="Search..." onkeyup="myFunction()">
+        </th>
+    </tr>
+</table>
 <table id="table" border="1">
     <thead>
     <tr>

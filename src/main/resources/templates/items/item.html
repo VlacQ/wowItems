@@ -2,60 +2,63 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" href="@{/css/demo.css}"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title th:text="'Wow Items - ' + ${item.name}"/>
 </head>
 <body>
-    <h3 th:text="${item.name}"/>
-    <a th:href="@{/prices/add(itemId=${item.id})}"
-       class="btn btn-primary btn-sm mb-3">
-        Add Entry
-    </a>
-    <a th:href="@{/items/list}"
-       class="btn btn-primary btn-sm mb-3">
-        Back to List of Items
-    </a>
-    <table border="1">
-        <thead>
-        <tr>
-            <th>Median</th>
-            <th>Average</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td th:text="${item.median}"/>
-            <td th:text="${item.average}"/>
-        </tr>
-        </tbody>
-    </table>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Quantity</th>
-                <th>Amount</th>
-                <th>Total Amount</th>
-                <th>Date</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="price : ${item.priceList}">
-                <td th:text="${price.quantity}"/>
-                <td th:text="${price.amount}"/>
-                <td th:text="${price.amount * price.quantity}"/>
-                <td th:text="${#dates.format(price.date, 'dd-MM-yyyy')}"/>
-                <td>
-                    <a th:href="@{/prices/update(priceId=${price.id})}" class="btn btn-info btn-sm">
-                        Update
-                    </a>
-                    <a th:href="@{/prices/delete(priceId=${price.id}, itemId=${item.id})}" class="btn btn-danger btn-sm"
-                       onclick="if (!(confirm('Are you sure you want to delete this entry?'))) return false">
-                        Delete
-                    </a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<h3 th:text="${item.name}"/>
+<a th:href="@{/prices/add(itemId=${item.id})}"
+   class="btn btn-primary btn-sm mb-3">
+    Add Entry
+</a>
+<a th:href="@{/items/list}"
+   class="btn btn-primary btn-sm mb-3">
+    Back to List of Items
+</a>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Median</th>
+        <th>Average</th>
+        <th>Standard Deviation</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${item.median}"/>
+        <td th:text="${item.average}"/>
+        <td th:text="${item.standardDeviation}"/>
+    </tr>
+    </tbody>
+</table>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Quantity</th>
+        <th>Amount</th>
+        <th>Total Amount</th>
+        <th>Date</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="price : ${item.priceList}">
+        <td th:text="${price.quantity}"/>
+        <td th:text="${price.amount}"/>
+        <td th:text="${price.amount * price.quantity}"/>
+        <td th:text="${#dates.format(price.date, 'dd-MM-yyyy')}"/>
+        <td>
+            <a th:href="@{/prices/update(priceId=${price.id})}" class="btn btn-info btn-sm">
+                Update
+            </a>
+            <a th:href="@{/prices/delete(priceId=${price.id}, itemId=${item.id})}" class="btn btn-danger btn-sm"
+               onclick="if (!(confirm('Are you sure you want to delete this entry?'))) return false">
+                Delete
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

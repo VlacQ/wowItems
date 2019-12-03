@@ -63,4 +63,9 @@ public class ItemController {
 
         return "redirect:/items/list";
     }
+
+    @GetMapping("/read")
+    public String readFile(){
+        return "/items/read";
+    }
 }
