@@ -30,13 +30,13 @@ public class Item {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Price> priceList;
 
-    @Column(name = "median")
+    @Column(name = "median", columnDefinition = "Decimal(7,4)")
     private BigDecimal median = BigDecimal.ZERO;
 
-    @Column(name = "average")
+    @Column(name = "average", columnDefinition = "Decimal(7,4)")
     private BigDecimal average = BigDecimal.ZERO;
 
-    @Column(name = "standard_deviation")
+    @Column(name = "standard_deviation", columnDefinition = "Decimal(7,4)")
     private BigDecimal standardDeviation = BigDecimal.ZERO;
 
     public void addPrice(Price price){
