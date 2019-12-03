@@ -1,13 +1,16 @@
 package com.wowItemsAPI.controller;
 
 import com.wowItemsAPI.entity.Item;
+import com.wowItemsAPI.entity.Price;
 import com.wowItemsAPI.service.ItemService;
+import com.wowItemsAPI.service.PriceService;
+import com.wowItemsAPI.util.ExcelReader;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -17,8 +20,17 @@ import java.util.List;
 public class ItemController {
     private ItemService itemService;
 
+    private PriceService priceService;
+
+    private ExcelReader excelReader;
+
     @Autowired
-    public ItemController(ItemService itemService){this.itemService = itemService;}
+    public ItemController(ItemService itemService, PriceService priceService, ExcelReader excelReader){
+        this.itemService = itemService;
+        this.priceService = priceService;
+        this.excelReader = excelReader;
+    }
+
 
     @GetMapping("/list")
     public String itemsList(Model model){
@@ -67,5 +79,29 @@ public class ItemController {
     @GetMapping("/read")
     public String readFile(){
         return "/items/read";
+    }
+
+    @PostMapping("/read")
+    public String readFromFile(@RequestParam("file") MultipartFile file){
+        List<Item> itemList = excelReader.readExcelFile(file);
+        Item temp;
+
+        for (Item item:itemList) {
+            temp = itemService.findByName(item.getName());
+            if (temp == null){
+                for (Price price:item.getPriceList()) {
+                    priceService.save(price);
+                }
+                item.countValues();
+            } else {
+                for (Price price:item.getPriceList()) {
+                    priceService.save(price);
+                    temp.addPrice(price);
+                }
+            }
+            itemService.save(temp);
+        }
+
+        return "items/readSuccessfully";
     }
 }

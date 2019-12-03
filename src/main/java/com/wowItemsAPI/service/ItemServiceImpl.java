@@ -34,16 +34,12 @@ public class ItemServiceImpl implements ItemService {
         if (result.isPresent()) {
             item = result.get();
         }
-        else {
-            throw new RuntimeException("Did not find employee id - " + id);
-        }
 
         return item;
     }
 
     @Override
     public Item findByName(String name) {
-//        return new Item();
         return itemRepository.findItemByName(name);
     }
 
@@ -51,11 +47,6 @@ public class ItemServiceImpl implements ItemService {
     public void save(Item item) {
         itemRepository.save(item);
     }
-
-//    @Override
-//    public void update(Item item) {
-//        itemRepository.update(item);
-//    }
 
     @Override
     public void deleteById(int id) {

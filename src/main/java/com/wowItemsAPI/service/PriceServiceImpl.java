@@ -73,17 +73,6 @@ public class PriceServiceImpl implements PriceService {
         price.setAmount(temp);
 
         priceRepository.save(price);
-
-//        try {
-//            BigDecimal temp = price.getAmount();
-//            temp = temp.setScale(4, BigDecimal.ROUND_UNNECESSARY).divide(new BigDecimal(price.getQuantity()), BigDecimal.ROUND_UNNECESSARY);
-//
-//            price.setAmount(temp);
-//
-//            priceRepository.save(price);
-//        } catch (NullPointerException e){
-//            return false;
-//        }
         return true;
     }
 
