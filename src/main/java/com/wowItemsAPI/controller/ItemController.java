@@ -92,14 +92,15 @@ public class ItemController {
                 for (Price price:item.getPriceList()) {
                     priceService.save(price);
                 }
+                itemService.save(item);
                 item.countValues();
             } else {
                 for (Price price:item.getPriceList()) {
                     priceService.save(price);
                     temp.addPrice(price);
                 }
+                itemService.save(temp);
             }
-            itemService.save(temp);
         }
 
         return "items/readSuccessfully";
