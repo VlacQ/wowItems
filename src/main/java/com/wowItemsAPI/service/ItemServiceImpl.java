@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,13 +22,6 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Item> findAll() {
         List<Item> itemList = itemRepository.findAllByOrderByNameAsc();
-        if (itemList.isEmpty()){
-            itemList = new ArrayList<>();
-            Item item = new Item();
-            item.setId(0);
-            item.setName("Table item is empty");
-            itemList.add(item);
-        }
         return itemList;
     }
 

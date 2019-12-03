@@ -21,13 +21,16 @@
             </a>
         </th>
     </tr>
-    <tr>
+    <tr th:if="${itemList.size()} > 0">
         <th>
             <input type="text" id="search" placeholder="Search..." onkeyup="myFunction()">
         </th>
     </tr>
 </table>
-<table id="table" border="1">
+<a th:if="${itemList.size()} == 0">
+    Database is empty. Add items.
+</a>
+<table id="table" border="1" th:if="${itemList.size()} > 0">
     <thead>
     <tr>
         <th>Name</th>
