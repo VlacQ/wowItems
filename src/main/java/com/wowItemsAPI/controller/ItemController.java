@@ -73,7 +73,9 @@ public class ItemController {
         }
         itemService.save(item);
 
-        return "redirect:/items/list";
+        item = itemService.findByName(item.getName());
+
+        return "redirect:/items/item?itemId=" + item.getId();
     }
 
     @GetMapping("/read")
