@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 @Entity
@@ -39,6 +40,9 @@ public class Item {
     @Column(name = "standard_deviation", columnDefinition = "Decimal(7,4)")
     private BigDecimal standardDeviation = BigDecimal.ZERO;
 
+    @Column(name = "max", columnDefinition = "Decimal(7,4)")
+    private BigDecimal max = BigDecimal.ZERO;
+
     public void addPrice(Price price){
         if (this.priceList == null)
             this.priceList = new ArrayList<>();
@@ -47,6 +51,7 @@ public class Item {
         countMedian();
         countAverage();
         countStandardDeviation();
+        countSingleMax(price);
     }
 
     public void removePrice(Price price){
@@ -54,12 +59,14 @@ public class Item {
         countMedian();
         countAverage();
         countStandardDeviation();
+        countMax();
     }
 
     public void countValues(){
         countMedian();
         countAverage();
         countStandardDeviation();
+        countMax();
     }
 
 
@@ -104,9 +111,27 @@ public class Item {
             sum = sum.add(element.subtract(average).pow(2));
         }
 
-        sum = sum.divide(BigDecimal.valueOf(array.length));
+        sum = sum.divide(BigDecimal.valueOf(array.length), BigDecimal.ROUND_HALF_EVEN).setScale(4, BigDecimal.ROUND_HALF_EVEN);
 
         this.setStandardDeviation(BigDecimalSqrt(sum, 4));
+    }
+
+
+    private void countMax(){
+        Iterator iterator = this.getPriceList().iterator();
+        while (iterator.hasNext()){
+            Price price = (Price) iterator.next();
+            if (max.compareTo(price.getAmount()) < 0){
+                this.setMax(price.getAmount());
+            }
+        }
+    }
+
+
+    private void countSingleMax(Price price){
+        if (max.compareTo(price.getAmount()) < 0){
+            this.setMax(price.getAmount());
+        }
     }
 
     private BigDecimal[] sortArray(){
