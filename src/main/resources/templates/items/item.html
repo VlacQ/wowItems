@@ -51,7 +51,7 @@
         <td th:text="${price.amount * price.quantity}"/>
         <td th:text="${#dates.format(price.date, 'dd-MM-yyyy')}"/>
         <td>
-            <a th:href="@{/prices/update(priceId=${price.id})}" class="btn btn-info btn-sm">
+            <a th:href="@{/prices/update(priceId=${price.id}, itemId=${item.id})}" class="btn btn-info btn-sm">
                 Update
             </a>
             <a th:href="@{/prices/delete(priceId=${price.id}, itemId=${item.id})}" class="btn btn-danger btn-sm"

@@ -49,12 +49,7 @@ public class PriceServiceImpl implements PriceService {
 
         Price price = null;
 
-        if (result.isPresent()) {
-            price = result.get();
-        }
-        else {
-            throw new RuntimeException("Did not find employee id - " + id);
-        }
+        price = result.orElseGet(Price::new);
 
         return price;
     }

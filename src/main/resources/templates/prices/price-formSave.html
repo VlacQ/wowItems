@@ -8,7 +8,7 @@
 <body>
 <h3 th:text="'Add Entry'"/>
 <form action="#" th:action="@{/prices/save}" method="post" th:object="${priceItem}">
-    <input type="hidden" th:value="${id}" class="form-control mb-4 col-4"/>
+    <input type="hidden" th:field="*{id}"class="form-control mb-4 col-4"/>
     <input type="hidden" th:field="*{item}" th:value="${item.id}" class="form-control mb-4 col-4"/>
     <table>
         <tr>
