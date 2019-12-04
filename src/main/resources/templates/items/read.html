@@ -7,24 +7,32 @@
     <title th:text="'Wow Items - Read File'"/>
 </head>
 <body>
-<h3 th:text="'Read data from file'"/>
-<a th:href="@{/items/list}"
-   class="btn btn-primary btn-sm mb-3">
-    Back to List of Items
-</a>
-<div>
-    <form method="POST" enctype="multipart/form-data" action="/items/read">
-        <table>
-            <tr>
-                <td>File to upload:</td>
-                <td><input type="file" name="file"/></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><input type="submit" value="Upload"/></td>
-            </tr>
-        </table>
-    </form>
+<div class="container">
+    <h1 th:align="center" th:text="'Read data from file'"/>
+    <table class="table">
+        <tr align="center">
+            <th>
+                <form method="POST" enctype="multipart/form-data" action="/items/read">
+                    <table>
+                        <tr>
+                            <td>File to upload:</td>
+                            <td><input type="file" name="file"/></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input type="submit" value="Upload"/></td>
+                        </tr>
+                    </table>
+                </form>
+            </th>
+        </tr>
+        <tr th:align="center">
+            <th><a th:href="@{/items/list}"
+                   class="btn btn-primary btn-sm mb-3">
+                Back to List of Items
+            </a></th>
+        </tr>
+    </table>
 </div>
 </body>
 </html>

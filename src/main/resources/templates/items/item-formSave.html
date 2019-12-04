@@ -7,22 +7,32 @@
     <title th:text="'Wow Items - Add Item'"/>
 </head>
 <body>
-<form action="#" th:action="@{/items/save}" th:object="${item}" method="post">
-    <input type="hidden" th:field="*{id}" class="form-control mb-4 col-4"/>
-    <table>
+<div class="container">
+    <table class="table" th:align="center">
         <tr>
-            <td>Name of the Item:</td>
-            <td><input type="text" th:field="*{name}" placeholder="Super Rod of Destruction"
-                       class="form-control mb-4 col-4"/></td>
-            <td>
-            <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>
-            </td>
+            <td th:align="center"><h1 th:text="'Add Item'"/></td>
         </tr>
         <tr>
-            <td><input type="submit" value="Submit" class="btn btn-info"/></td>
+            <td th:align="center"><a th:href="@{/items/list}" class="btn btn-primary">Back
+                to Items list</a></td>
+        </tr>
+        <tr>
+            <form action="#" th:action="@{/items/save}" th:object="${item}" method="post" th:align="center">
+                <input type="hidden" th:field="*{id}"/>
+                <table th:border="solid" id="formTable" th:align="center">
+                    <tr>
+                        <td>Name of the Item:</td>
+                        <td><input type="text" th:field="*{name}" placeholder="Super Rod of Destruction"/></td>
+                        <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>
+                    </tr>
+                    <tr>
+                        <td th:colspan="3" th:align="center"><input type="submit" value="Submit" class="btn btn-info"/>
+                        </td>
+                    </tr>
+                </table>
+            </form>
         </tr>
     </table>
-</form>
-<a th:href="@{/items/list}">Back to Items list</a>
+</div>
 </body>
 </html>

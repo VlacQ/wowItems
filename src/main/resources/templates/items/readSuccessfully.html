@@ -5,13 +5,21 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title th:text="'Wow Items - file read successfully'"/>
-    <meta http-equiv="refresh" content="3;url=/items/list" />
+    <meta http-equiv="refresh" content="2;url=/items/list"/>
 </head>
 <body>
-<h3 th:text="'File has been read successfully!'"/>
-<a th:href="@{/items/list}"
-   class="btn btn-primary btn-sm mb-3">
-    Back to List of Items
-</a>
+<div class="container">
+    <h1 th:align="center" th:text="'File has been read successfully!'"/>
+    <table class="table">
+        <tr align="center">
+            <th>
+                <a th:href="@{/items/list}"
+                   class="btn btn-primary btn-sm mb-3">
+                    Back to List of Items
+                </a>
+            </th>
+        </tr>
+    </table>
+</div>
 </body>
 </html>

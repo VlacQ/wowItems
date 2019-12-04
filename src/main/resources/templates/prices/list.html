@@ -1,41 +1,50 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../../static/css/demo.css" th:ref="@{/css/demo.css}"/>
     <title th:text="'Wow Items - List of Items'"/>
 </head>
 <body>
-    <h3>List of Items</h3>
-    <a th:href="@{/items/list}"
-        class="btn btn-primary btn-sm mb-3">
-        Back to List of Items
-    </a>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Quantity</th>
-                <th>Amount</th>
-                <th>Date</th>
-            </tr>
+<div class="container">
+    <h1 align="center">List of Prices</h1>
+    <table class="table">
+        <tr align="center">
+            <th>
+                <a th:align="center" th:href="@{/items/list}"
+                   class="btn btn-primary btn-sm mb-3">
+                    Back to List of Items
+                </a>
+            </th>
+        </tr>
+    </table>
+    <table class="table table-striped">
+        <thead class="table-primary">
+        <tr class="table-primary">
+            <th>ID</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+            <th>Date</th>
+        </tr>
         </thead>
         <tbody>
-            <tr th:each="price : ${priceList}">
-                <td>
-                    <a th:text="${price.id}"/>
-                </td>
-                <td>
-                    <a th:text="${price.quantity}"/>
-                </td>
-                <td>
-                    <a th:text="${price.amount}"/>
-                </td>
-                <td>
-                    <a th:text="${#dates.format(price.date, 'dd-MM-yyyy')}"/>
-                </td>
-            </tr>
+        <tr th:each="price : ${priceList}">
+            <td>
+                <a th:text="${price.id}"/>
+            </td>
+            <td>
+                <a th:text="${price.quantity}"/>
+            </td>
+            <td>
+                <a th:text="${price.amount}"/>
+            </td>
+            <td>
+                <a th:text="${#dates.format(price.date, 'dd-MM-yyyy')}"/>
+            </td>
+        </tr>
         </tbody>
     </table>
+</div>
 </body>
 </html>

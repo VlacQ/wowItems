@@ -3,3 +3,7 @@
     alignment: center;
     background-color: yellow;
 }
+
+#formTable td{
+    padding: 5px;
+}
