@@ -39,7 +39,7 @@
         <tbody id="tbodySearch">
         <tr th:each="item : ${itemList}">
             <td th:align="center">
-                <a th:href="@{/items/item(itemId=${item.id})}" th:text="${item.name}" class="button"/>
+                <a th:href="@{/items/item(itemId=${item.id})}" th:text="${item.name}" class="btn btn-light"/>
             </td>
             <td th:align="center">
                 <a th:href="@{/items/update(itemId=${item.id})}" class="btn btn-info btn-sm">
@@ -72,5 +72,21 @@
             }
         }
     }
+</script>
+<script>
+    const getCellValue = (tr, idx) => tr.children[idx].innerText || tr.children[idx].textContent;
+
+    const comparer = (idx, asc) => (a, b) => ((v1, v2) =>
+    v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2)
+    )(getCellValue(asc ? b : a, idx), getCellValue(asc ? a : b, idx));
+
+    // do the work...
+    document.querySelectorAll('th').forEach(th => th.addEventListener('click', (() => {
+        const table = th.closest('table');
+    const tbody = table.querySelector('tbody');
+    Array.from(tbody.querySelectorAll('tr'))
+        .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
+        .forEach(tr => tbody.appendChild(tr) );
+    })));
 </script>
 </html>
