@@ -44,8 +44,13 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void save(Item item) {
-        itemRepository.save(item);
+    public Boolean save(Item item) {
+        try {
+            itemRepository.save(item);
+        } catch (Exception e){
+            return false;
+        }
+        return true;
     }
 
     @Override

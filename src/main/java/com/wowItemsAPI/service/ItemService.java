@@ -11,7 +11,7 @@ public interface ItemService {
 
     public Item findByName(String name);
 
-    public void save(Item item);
+    public Boolean save(Item item);
 
 //    public void update(Item item);
 
