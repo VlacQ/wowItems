@@ -22,7 +22,7 @@
                 <table th:border="solid" id="formTable" th:align="center">
                     <tr>
                         <td>Name of the Item:</td>
-                        <td><input type="text" th:field="*{name}" placeholder="Super Rod of Destruction"/></td>
+                        <td><input type="text" th:field="*{name}" placeholder="Super Rod of Destruction" autocomplete="off"/></td>
                         <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>
                     </tr>
                     <tr>

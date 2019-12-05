@@ -1,36 +1,57 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/demo.css}"/>
     <title th:text="'Wow Items - Add Entry'"/>
 </head>
 <body>
-<h3 th:text="'Add Entry'"/>
-<form action="#" th:action="@{/prices/save}" method="post" th:object="${priceItem}">
-    <input type="hidden" th:field="*{id}"class="form-control mb-4 col-4"/>
-    <input type="hidden" th:field="*{item}" th:value="${item.id}" class="form-control mb-4 col-4"/>
-    <table>
+    <!--<table>-->
+        <!--<tr>-->
+            <!--<td><input type="submit" value="Submit" class="btn btn-info col-2"/></td>-->
+        <!--</tr>-->
+    <!--</table>-->
+<!--</form>-->
+
+<div class="container">
+    <table class="table" th:align="center">
         <tr>
-            <td>Quantity:</td>
-            <td><input type="number" th:field="*{quantity}" placeholder="5" class="form-control mb-4 col-4"/></td>
-            <td th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}">Quantity Error</td>
+            <td th:align="center"><h1 th:text="'Add Entry'"/></td>
         </tr>
         <tr>
-            <td>Amount:</td>
-            <td><input type="number" th:field="*{amount}" placeholder="1.25" class="form-control mb-4 col-4" step="any"></td>
-            <td th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Amount Error</td>
+            <td th:align="center"><a th:href="@{/items/item(itemId=${item.id})}" th:text="'Back to ' + ${item.name}"/>
+            </td>
         </tr>
         <tr>
-            <td>Date:</td>
-            <td><input type="date" th:field="*{date}" class="form-control mb-4 col-4"/></td>
-            <td th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Date Error</td>
-        </tr>
-        <tr>
-            <td><input type="submit" value="Submit" class="btn btn-info col-2"/></td>
+            <form action="#" th:action="@{/prices/save}" method="post" th:object="${priceItem}">
+                <input type="hidden" th:field="*{id}" class="form-control mb-4 col-4"/>
+                <input type="hidden" th:field="*{item}" th:value="${item.id}" class="form-control mb-4 col-4"/>
+                <table id="formTable" th:align="center">
+                    <tr>
+                        <td>Quantity:</td>
+                        <td><input type="number" th:field="*{quantity}" placeholder="5" class="form-control" autocomplete="off"/></td>
+                        <td th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}">Quantity Error</td>
+                    </tr>
+                    <tr>
+                        <td>Amount:</td>
+                        <td><input type="number" th:field="*{amount}" placeholder="1.25" class="form-control" step="any" autocomplete="off">
+                        </td>
+                        <td th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Amount Error</td>
+                    </tr>
+                    <tr>
+                        <td>Date:</td>
+                        <td><input type="date" th:field="*{date}" class="form-control" autocomplete="off"/></td>
+                        <td th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Date Error</td>
+                    </tr>
+                    <tr>
+                        <td th:colspan="3" th:align="center"><input type="submit" value="Submit" class="btn btn-info"/>
+                        </td>
+                    </tr>
+                </table>
+            </form>
         </tr>
     </table>
-</form>
-<a th:href="@{/items/item(itemId=${item.id})}" th:text="'Back to ' + ${item.name}"/>
+</div>
 </body>
 </html>
