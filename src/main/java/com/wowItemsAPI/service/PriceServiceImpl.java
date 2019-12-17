@@ -63,7 +63,7 @@ public class PriceServiceImpl implements PriceService {
         }
 
         BigDecimal temp = price.getAmount();
-        temp = temp.setScale(4, BigDecimal.ROUND_UNNECESSARY).divide(new BigDecimal(price.getQuantity()), BigDecimal.ROUND_UNNECESSARY);
+        temp = temp.setScale(4, BigDecimal.ROUND_HALF_EVEN).divide(new BigDecimal(price.getQuantity()), BigDecimal.ROUND_HALF_EVEN);
 
         price.setAmount(temp);
 

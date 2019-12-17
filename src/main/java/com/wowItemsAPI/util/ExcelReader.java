@@ -11,8 +11,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.LinkedList;
 import java.util.List;
+
+import static java.math.BigDecimal.ROUND_HALF_EVEN;
 
 @Data
 @Configuration
@@ -62,7 +66,7 @@ public class ExcelReader {
             if (!isCellEmpty(row.getCell(column))){
                 price = new Price();
                 price.setQuantity((int)row.getCell(column + 1).getNumericCellValue());
-                price.setAmount(BigDecimal.valueOf(row.getCell(column + 1).getNumericCellValue()));
+                price.setAmount(new BigDecimal(Double.toString(row.getCell(column).getNumericCellValue())));
                 price.setDate(null);
                 priceList.add(price);
             }
