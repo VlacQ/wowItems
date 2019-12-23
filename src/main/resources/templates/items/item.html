@@ -41,7 +41,10 @@
         </tr>
         </tbody>
     </table>
-    <table border="1" class="table table-striped" th:if="${item.priceList.size()} > 0">
+    <div th:if="${item.priceList.size()} > 1">
+        <canvas id="myChart"></canvas>
+    </div>
+    <table border="1" id="blablabla" class="table table-striped" th:if="${item.priceList.size()} > 0">
         <thead>
         <tr class="table-primary">
             <th>Quantity</th>
@@ -86,6 +89,48 @@
         .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
         .forEach(tr => tbody.appendChild(tr) );
     })));
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    function getDates() {
+        var data = [];
+        var table = document.getElementById("blablabla");
+
+        for (var i=1; i<table.rows.length; i++) {
+            var tableRow = table.rows[i];
+            data.push(tableRow.cells[3].innerHTML);
+        }
+
+        return data;
+    }
+    function getAmounts() {
+        var data = [];
+        var table = document.getElementById("blablabla");
+
+        for (var i=1; i<table.rows.length; i++) {
+            var tableRow = table.rows[i];
+            data.push(tableRow.cells[1].innerHTML);
+        }
+
+        return data;
+    }
+
+    function renderChart(data, labels) {
+        var ctx = document.getElementById("myChart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '',
+                    data: data,
+                }]
+            },
+        });
+    }
+
+    renderChart(getAmounts(), getDates());
 </script>
 </body>
 </html>
