@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Entity;
 import javax.validation.constraints.Min;
 
 @Getter
@@ -15,4 +14,7 @@ import javax.validation.constraints.Min;
 public class PriceItem extends Price {
     @Min(1)
     private int item;
+
+    @Min(1)
+    private int pack;
 }

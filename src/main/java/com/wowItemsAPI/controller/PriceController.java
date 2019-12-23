@@ -38,6 +38,7 @@ public class PriceController {
     @GetMapping("/add")
     public String addPriceForm(Model model, @RequestParam("itemId") @Valid Integer itemId){
         PriceItem priceItem = new PriceItem();
+        priceItem.setPack(1);
         priceItem.setItem(itemId);
         model.addAttribute("priceItem", priceItem);
         model.addAttribute("item", itemService.findById(itemId));
@@ -53,6 +54,7 @@ public class PriceController {
         pi.setDate(price.getDate());
         pi.setQuantity(price.getQuantity());
         pi.setId(price.getId());
+        pi.setPack(1);
         Item item = itemService.findById(itemId);
         model.addAttribute("priceItem", pi);
         model.addAttribute("item", item);
@@ -79,8 +81,8 @@ public class PriceController {
             priceItem.setId(0L);
         Price price = priceService.findById(priceItem.getId());
         price.setDate(priceItem.getDate());
-        price.setAmount(priceItem.getAmount());
-        price.setQuantity(priceItem.getQuantity());
+        price.setAmount(priceItem.getAmount().multiply(BigDecimal.valueOf(priceItem.getPack())));
+        price.setQuantity(priceItem.getQuantity() * priceItem.getPack());
         if (priceItem.getId() != 0L)
             price.setId(priceItem.getId());
         priceService.save(price);
