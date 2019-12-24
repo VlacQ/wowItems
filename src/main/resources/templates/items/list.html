@@ -33,6 +33,10 @@
         <thead align="center">
         <tr class="table-primary">
             <th>Name</th>
+            <th>Median</th>
+            <th>Average</th>
+            <th>Standard Deviation</th>
+            <th>Max</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -40,6 +44,18 @@
         <tr th:each="item : ${itemList}">
             <td th:align="center">
                 <a th:href="@{/items/item(itemId=${item.id})}" th:text="${item.name}" class="btn btn-light"/>
+            </td>
+            <td th:align="center">
+                <a th:text="${item.median}"/>
+            </td>
+            <td th:align="center">
+                <a th:text="${item.average}"/>
+            </td>
+            <td th:align="center">
+                <a th:text="${item.standardDeviation}"/>
+            </td>
+            <td th:align="center">
+                <a th:text="${item.max}"/>
             </td>
             <td th:align="center">
                 <a th:href="@{/items/update(itemId=${item.id})}" class="btn btn-info btn-sm">
