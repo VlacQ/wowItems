@@ -7,10 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Data
@@ -45,13 +42,30 @@ public class Item {
 
     public void addPrice(Price price){
         if (this.priceList == null)
-            this.priceList = new ArrayList<>();
+            this.priceList = new LinkedList<>();
 
-        this.priceList.add(price);
+        addSortedPrice(price);
         countMedian();
         countAverage();
         countStandardDeviation();
         countSingleMax(price);
+    }
+
+    private void addSortedPrice(Price price){
+        if (this.priceList.size() == 0)
+            this.priceList.add(price);
+        else if (price.getDate().compareTo(this.priceList.get(0).getDate()) < 0)
+            this.priceList.add(0, price);
+        else if (price.getDate().compareTo(this.priceList.get(this.priceList.size()-1).getDate()) > 0)
+            this.priceList.add(this.priceList.size(), price);
+        else {
+            for (int i = 0; i < this.priceList.size() - 1; i++) {
+                if (price.getDate().compareTo(this.priceList.get(i).getDate()) <= 0){
+                    this.priceList.add(i, price);
+                    break;
+                }
+            }
+        }
     }
 
     public void removePrice(Price price){
@@ -110,10 +124,12 @@ public class Item {
         for (BigDecimal element : array) {
             sum = sum.add(element.subtract(average).pow(2));
         }
-
-        sum = sum.divide(BigDecimal.valueOf(array.length), BigDecimal.ROUND_HALF_EVEN).setScale(4, BigDecimal.ROUND_HALF_EVEN);
-
-        this.setStandardDeviation(BigDecimalSqrt(sum, 4));
+        if (this.priceList.size() > 0){
+            sum = sum.divide(BigDecimal.valueOf(array.length), BigDecimal.ROUND_HALF_EVEN).setScale(4, BigDecimal.ROUND_HALF_EVEN);
+            this.setStandardDeviation(BigDecimalSqrt(sum, 4));
+        } else {
+            this.setStandardDeviation(BigDecimal.ZERO);
+        }
     }
 
 
