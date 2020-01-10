@@ -56,7 +56,7 @@ public class Item {
             this.priceList.add(price);
         else if (price.getDate().compareTo(this.priceList.get(0).getDate()) < 0)
             this.priceList.add(0, price);
-        else if (price.getDate().compareTo(this.priceList.get(this.priceList.size()-1).getDate()) > 0)
+        else if (price.getDate().compareTo(this.priceList.get(this.priceList.size()-1).getDate()) >= 0)
             this.priceList.add(this.priceList.size(), price);
         else {
             for (int i = 0; i < this.priceList.size() - 1; i++) {
