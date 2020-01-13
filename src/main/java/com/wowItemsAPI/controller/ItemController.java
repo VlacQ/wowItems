@@ -122,7 +122,7 @@ public class ItemController {
         System.out.println(fsr.getFilename());
 
         return ResponseEntity.ok()
-                .header("content-disposition", "inline; filename=d" + fsr.getFilename())
+                .header("content-disposition", "inline; filename=" + fsr.getFilename())
                 .body(fsr);
     }
 }
