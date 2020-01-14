@@ -28,16 +28,16 @@ public class Item {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Price> priceList;
 
-    @Column(name = "median", columnDefinition = "Decimal(7,4)")
+    @Column(name = "median", columnDefinition = "Decimal(10,4)")
     private BigDecimal median = BigDecimal.ZERO;
 
-    @Column(name = "average", columnDefinition = "Decimal(7,4)")
+    @Column(name = "average", columnDefinition = "Decimal(10,4)")
     private BigDecimal average = BigDecimal.ZERO;
 
-    @Column(name = "standard_deviation", columnDefinition = "Decimal(7,4)")
+    @Column(name = "standard_deviation", columnDefinition = "Decimal(10,4)")
     private BigDecimal standardDeviation = BigDecimal.ZERO;
 
-    @Column(name = "max", columnDefinition = "Decimal(7,4)")
+    @Column(name = "max", columnDefinition = "Decimal(10,4)")
     private BigDecimal max = BigDecimal.ZERO;
 
     public void addPrice(Price price){
