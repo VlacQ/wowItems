@@ -2,13 +2,13 @@ package com.wowItemsAPI.util;
 
 import com.wowItemsAPI.entity.Item;
 import com.wowItemsAPI.entity.Price;
+import com.wowItemsAPI.entity.ReadFile;
 import com.wowItemsAPI.service.ItemService;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,40 +28,62 @@ public class Excel {
         this.itemService = itemService;
     }
 
-    public List<Item> readExcelFile(MultipartFile file){
+    public List<Item> readExcelFile(ReadFile readFile){
         File tempFile;
         Workbook wb;
         Sheet sheet = null;
         try {
             tempFile = File.createTempFile("prefix", "suffix");
-            file.transferTo(tempFile);
+            readFile.getFile().transferTo(tempFile);
             wb = WorkbookFactory.create(tempFile);
             sheet = wb.getSheetAt(0);
         } catch (IOException | InvalidFormatException e) {
             e.printStackTrace();
         }
 
-        return getData(sheet);
+        return getData(sheet, readFile.getIsDates());
     }
 
-    private List<Item> getData(Sheet sheet){
+    private List<Item> getData(Sheet sheet, Boolean isDates){
         List<Item> itemList = new LinkedList<>();
         int counter = 1;
         Item item;
         Row row = sheet.getRow(counter);
 
-        while (!isCellEmpty(row.getCell(0))){
+        while (row != null && !isCellEmpty(row.getCell(0))){
             item = new Item();
             item.setName(row.getCell(0).getStringCellValue());
 
-            item.setPriceList(getDataPrice(row));
+            if (isDates)
+                item.setPriceList(getDataPriceDates(row));
+            else
+                item.setPriceList(getDataPrice(row));
 
             itemList.add(item);
-
             row = sheet.getRow(++counter);
         }
 
         return itemList;
+    }
+
+    private List<Price> getDataPriceDates(Row row){
+        List<Price> priceList = new LinkedList<>();
+        Price price;
+        int column = 1;
+
+        while (column < 30000){
+            if (!isCellEmpty(row.getCell(column))){
+                price = new Price();
+                price.setDate(row.getCell(column).getDateCellValue());
+                price.setQuantity((int)row.getCell(column + 1).getNumericCellValue());
+                price.setAmount(new BigDecimal(Double.toString(row.getCell(column+2).getNumericCellValue())));
+                priceList.add(price);
+            }
+
+            column += 3;
+        }
+
+        return priceList;
     }
 
     private List<Price> getDataPrice(Row row){
@@ -138,7 +160,7 @@ public class Excel {
 
         for (Price price:list) {
             cell = row.createCell(counter);
-            cell.setCellValue(date.format(price.getDate()));
+            cell.setCellValue(price.getDate());
             cell = row.createCell(counter+1);
             cell.setCellValue(price.getQuantity());
             cell = row.createCell(counter+2);

@@ -2,6 +2,7 @@ package com.wowItemsAPI.controller;
 
 import com.wowItemsAPI.entity.Item;
 import com.wowItemsAPI.entity.Price;
+import com.wowItemsAPI.entity.ReadFile;
 import com.wowItemsAPI.service.ItemService;
 import com.wowItemsAPI.service.PriceService;
 import com.wowItemsAPI.util.Excel;
@@ -13,13 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
-import javax.validation.Path;
 import javax.validation.Valid;
-import java.io.File;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -86,13 +82,14 @@ public class ItemController {
     }
 
     @GetMapping("/read")
-    public String readFile(){
-        return "/items/read";
+    public String readFile(Model model){
+        model.addAttribute("readFile", new ReadFile());
+        return "items/read";
     }
 
     @PostMapping("/read")
-    public String readFromFile(@RequestParam("file") MultipartFile file){
-        List<Item> itemList = excel.readExcelFile(file);
+    public String readFromFile(@ModelAttribute("readFile") @Valid ReadFile readFile){
+        List<Item> itemList = excel.readExcelFile(readFile);
         Item temp;
 
         for (Item item:itemList) {
@@ -118,8 +115,6 @@ public class ItemController {
     @GetMapping(value = "/export", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public ResponseEntity exportToFile(){
         FileSystemResource fsr = new FileSystemResource(excel.exportToFile());
-
-        System.out.println(fsr.getFilename());
 
         return ResponseEntity.ok()
                 .header("content-disposition", "inline; filename=" + fsr.getFilename())

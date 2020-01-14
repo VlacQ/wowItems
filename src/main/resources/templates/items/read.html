@@ -12,11 +12,15 @@
     <table class="table">
         <tr align="center">
             <th>
-                <form method="POST" enctype="multipart/form-data" action="/items/read">
+                <form method="POST" enctype="multipart/form-data" action="/items/read" th:object="${readFile}">
                     <table>
                         <tr>
                             <td>File to upload:</td>
-                            <td><input type="file" name="file"/></td>
+                            <td><input type="file" th:field="*{file}"/></td>
+                        </tr>
+                        <tr>
+                            <td th:align="right"><input type="checkbox" th:field="*{isDates}"/></td>
+                            <td>data with dates</td>
                         </tr>
                         <tr>
                             <td></td>
