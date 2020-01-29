@@ -27,6 +27,7 @@
             <form action="#" th:action="@{/prices/save}" method="post" th:object="${priceItem}">
                 <input type="hidden" th:field="*{id}" class="form-control mb-4 col-4"/>
                 <input type="hidden" th:field="*{item}" th:value="${item.id}" class="form-control mb-4 col-4"/>
+                <input type="hidden" th:field="*{pack}" class="form-control" autocomplete="off"/>
                 <table id="formTable" th:align="center">
                     <tr>
                         <td>Quantity:</td>
@@ -44,11 +45,11 @@
                         <td><input type="date" th:field="*{date}" class="form-control" autocomplete="off"/></td>
                         <td th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Date Error</td>
                     </tr>
-                    <tr>
-                        <td>Package:</td>
-                        <td><input type="number" th:field="*{pack}" class="form-control" autocomplete="off"/></td>
-                        <td th:if="${#fields.hasErrors('pack')}" th:errors="*{pack}">Date Error</td>
-                    </tr>
+                    <!--<tr>-->
+                        <!--<td>Package:</td>-->
+                        <!--<td><input type="number" th:field="*{pack}" class="form-control" autocomplete="off"/></td>-->
+                        <!--<td th:if="${#fields.hasErrors('pack')}" th:errors="*{pack}">Date Error</td>-->
+                    <!--</tr>-->
                     <tr>
                         <td th:colspan="3" th:align="center"><input type="submit" value="Submit" class="btn btn-info"/>
                         </td>
