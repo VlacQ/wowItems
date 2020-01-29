@@ -35,7 +35,7 @@
                         <td th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}">Quantity Error</td>
                     </tr>
                     <tr>
-                        <td>Amount:</td>
+                        <td>Amount per Item:</td>
                         <td><input type="number" th:field="*{amount}" placeholder="1.25" class="form-control" step="any" autocomplete="off">
                         </td>
                         <td th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Amount Error</td>
