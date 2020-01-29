@@ -116,7 +116,7 @@ public class Item {
     }
 
 
-    private void countStandardDeviation(){
+    private void countStandardDeviation() {
         BigDecimal array[] = sortArray();
         BigDecimal sum = BigDecimal.ZERO;
         BigDecimal average = this.getAverage();
@@ -124,7 +124,7 @@ public class Item {
         for (BigDecimal element : array) {
             sum = sum.add(element.subtract(average).pow(2));
         }
-        if (this.priceList.size() > 0){
+        if (this.priceList.size() > 0) {
             sum = sum.divide(BigDecimal.valueOf(array.length), BigDecimal.ROUND_HALF_EVEN).setScale(4, BigDecimal.ROUND_HALF_EVEN);
             this.setStandardDeviation(BigDecimalSqrt(sum, 4));
         } else {
@@ -132,17 +132,14 @@ public class Item {
         }
     }
 
-
     private void countMax(){
-        Iterator iterator = this.getPriceList().iterator();
-        while (iterator.hasNext()){
-            Price price = (Price) iterator.next();
-            if (max.compareTo(price.getAmount()) < 0){
+        this.max = BigDecimal.ZERO;
+        for (Price price : this.getPriceList()) {
+            if (max.compareTo(price.getAmount()) < 0) {
                 this.setMax(price.getAmount());
             }
         }
     }
-
 
     private void countSingleMax(Price price){
         if (max.compareTo(price.getAmount()) < 0){
