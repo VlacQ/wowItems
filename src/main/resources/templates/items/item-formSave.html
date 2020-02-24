@@ -20,6 +20,10 @@
             <form action="#" th:action="@{/items/save}" th:object="${item}" method="post" th:align="center">
                 <input type="hidden" th:field="*{id}"/>
                 <input type="hidden" th:field="*{priceList}"/>
+                <input type="hidden" th:field="*{average}"/>
+                <input type="hidden" th:field="*{median}"/>
+                <input type="hidden" th:field="*{standardDeviation}"/>
+                <input type="hidden" th:field="*{max}"/>
                 <table th:border="solid" id="formTable" th:align="center">
                     <tr>
                         <td>Name of the Item:</td>
